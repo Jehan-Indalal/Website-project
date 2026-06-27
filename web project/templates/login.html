@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome - Chocolate World</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <i class="fa-solid fa-cake-candles"></i>
+    </div>
+    <h2>Chocolate World</h2>
+    <p class="login-sub">Who are you?</p>
+
+    {% if error %}
+    <div class="login-error">
+      <i class="fa-solid fa-circle-exclamation"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <!-- User button -->
+    <form method="POST" action="/login">
+      <input type="hidden" name="role" value="user">
+      <button type="submit" class="login-btn user-btn">
+        <i class="fa-solid fa-user"></i> I'm a Customer
+      </button>
+    </form>
+
+    <!-- Admin section -->
+    <div class="admin-section">
+      <button type="button" class="login-btn admin-btn" onclick="toggleAdminForm()">
+        <i class="fa-solid fa-lock"></i> I'm an Admin
+      </button>
+
+      <form id="adminForm" method="POST" action="/login" style="display:none; margin-top:12px;">
+        <input type="hidden" name="role" value="admin">
+        <input type="password" name="password" id="adminPassword" placeholder="Enter admin password" required>
+        <button type="submit" class="login-btn admin-confirm-btn">
+          <i class="fa-solid fa-right-to-bracket"></i> Login as Admin
+        </button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function toggleAdminForm() {
+  const form = document.getElementById('adminForm');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  if (form.style.display === 'block') {
+    document.getElementById('adminPassword').focus();
+  }
+}
+</script>
+</body>
+</html>

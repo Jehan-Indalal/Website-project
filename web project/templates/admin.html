@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="{{ url_for('admin') }}">Admin Panel</a>
+  <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+</div>
+
+<h2 class="title">Admin Panel <i class="fa-solid fa-gear"></i></h2>
+
+<!-- Add new item -->
+<div class="admin-box">
+  <h3><i class="fa-solid fa-plus"></i> Add New Item</h3>
+  <form method="POST" action="{{ url_for('add_item') }}">
+    <input type="text" name="name" placeholder="Item Name" required>
+    <input type="text" name="description" placeholder="Description" required>
+    <input type="number" name="price" placeholder="Price (EGP)" required>
+    <input type="text" name="image" placeholder="Image filename (e.g. Cupcake.JPEG.jpeg)" required>
+    <button type="submit">Add Item</button>
+  </form>
+</div>
+
+<!-- Menu items table -->
+<div class="admin-box">
+  <h3><i class="fa-solid fa-list"></i> Menu Items</h3>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.price }} EGP</td>
+        <td>
+          <a href="{{ url_for('delete_item', item_id=item.id) }}" class="delete-btn"
+             onclick="return confirm('Delete {{ item.name }}?')">
+            <i class="fa-solid fa-trash"></i> Delete
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Orders table -->
+<div class="admin-box">
+  <h3><i class="fa-solid fa-receipt"></i> Orders</h3>
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Payment</th>
+        <th>Total</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for o in orders %}
+      <tr>
+        <td>{{ o.id }}</td>
+        <td>{{ o.full_name }}</td>
+        <td>{{ o.address }}</td>
+        <td>{{ o.phone }}</td>
+        <td>{{ o.payment_method }}</td>
+        <td>{{ o.total }} EGP</td>
+        <td>{{ o.created_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

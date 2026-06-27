@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chocolate World</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="{{ url_for('home') }}">Home</a>
+  <a href="{{ url_for('menu') }}">Menu</a>
+  <a href="{{ url_for('order') }}">Order</a>
+  <a href="{{ url_for('payment') }}">Payment</a>
+  {% if session.get('role') == 'admin' %}
+  <a href="{{ url_for('admin') }}">Admin</a>
+  {% endif %}
+  <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+</div>
+
+<div class="hero">
+  <h1>Welcome to Chocolate World</h1>
+  <p>Best Chocolate in the World</p>
+  <a href="{{ url_for('menu') }}" class="btn">Order Now</a>
+</div>
+
+</body>
+</html>
